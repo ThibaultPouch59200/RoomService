@@ -6,10 +6,12 @@ A modern, responsive web application for displaying real-time room availability 
 
 - 🎨 **Visual Status Indicators**: Three-color system (Green/Yellow/Red) for instant room availability
 - 📱 **Fully Responsive**: Works seamlessly on mobile, tablet, and desktop
+- 📅 **Date Selection**: View room availability for any date (Today, Tomorrow, or custom date)
+- 🏢 **Floor Selector**: Quick navigation between floors without scrolling
 - 🔄 **Auto-Refresh**: Automatic updates every 2 minutes
-- 📅 **Detailed View**: Click any room to see all daily reservations
-- 🏢 **Floor Organization**: Rooms organized by floor (0, 1, 2)
+- 🚪 **Detailed View**: Click any room to see all daily reservations
 - 🔍 **Service Manager Distinction**: Clear differentiation between Intra and MyEpitech reservations
+- 🏛️ **Office/Bureau Display**: Offices shown in grey and marked as non-bookable
 - ⚡ **PWA Ready**: Can be installed as a mobile app
 
 ## Status Colors
@@ -17,6 +19,7 @@ A modern, responsive web application for displaying real-time room availability 
 - **Green**: Room is available (no reservations)
 - **Yellow**: Reservation starting within 1 hour
 - **Red**: Currently occupied
+- **Grey**: Office/Bureau (not bookable)
 
 ## Tech Stack
 

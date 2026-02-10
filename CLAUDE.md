@@ -22,12 +22,22 @@ EpiRoom is a responsive web application for displaying real-time room availabili
   - `intra`: Epitech internal system reservations
   - `my`: MyEpitech reservations
 - Display reservation details: title, unit name, start time, end time
+- Office/Bureau rooms (marked with 'B') are displayed in grey and are not clickable
+
+### Date Selection
+- Users can select any date to view room availability
+- Quick select buttons for "Today" and "Tomorrow"
+- Custom date picker for specific dates
+- Current viewing date is prominently displayed
+- Data automatically refreshes when date is changed
 
 ### UI/UX Priorities
 - Responsive design that works on mobile, tablet, and desktop
+- Floor selector allows quick navigation between floors without scrolling
 - Progressive Web App (PWA) capabilities for mobile installation
 - Intuitive, modern interface with excellent visual hierarchy
 - Real-time or near-real-time updates of room status
+- Modal-based legend and date picker for clean interface
 
 ## Technology Stack
 

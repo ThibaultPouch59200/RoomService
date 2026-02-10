@@ -10,16 +10,18 @@ export default function Home() {
   const [floors, setFloors] = useState<FloorData[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<RoomInfo | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<number>(0);
+  const [selectedDate, setSelectedDate] = useState<string>(getTodayDate());
   const [showLegend, setShowLegend] = useState(false);
+  const [showDatePicker, setShowDatePicker] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
 
-  const fetchRoomData = async () => {
+  const fetchRoomData = async (date?: string) => {
     try {
-      const date = getTodayDate();
+      const fetchDate = date || selectedDate;
       const response = await fetch(
-        `/api/rooms?startDate=${date}&endDate=${date}`
+        `/api/rooms?startDate=${fetchDate}&endDate=${fetchDate}`
       );
 
       if (!response.ok) {
@@ -39,10 +41,10 @@ export default function Home() {
     }
   };
 
-  // Initial load
+  // Initial load and refetch when date changes
   useEffect(() => {
     fetchRoomData();
-  }, []);
+  }, [selectedDate]);
 
   // Auto-refresh every 2 minutes
   useEffect(() => {
@@ -51,7 +53,7 @@ export default function Home() {
     }, 2 * 60 * 1000);
 
     return () => clearInterval(interval);
-  }, []);
+  }, [selectedDate]);
 
   // Update room statuses every 30 seconds without re-fetching
   useEffect(() => {
@@ -130,6 +132,24 @@ export default function Home() {
             </div>
             <div className="text-right flex items-center gap-2">
               <button
+                onClick={() => setShowDatePicker(true)}
+                className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 rounded-lg transition-colors"
+                aria-label="Select date"
+                title="Select date"
+              >
+                <svg
+                  className="w-5 h-5"
+                  fill="none"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth="2"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                </svg>
+              </button>
+              <button
                 onClick={() => setShowLegend(true)}
                 className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg transition-colors"
                 aria-label="Show legend"
@@ -139,7 +159,7 @@ export default function Home() {
               </button>
               <div>
                 <button
-                  onClick={fetchRoomData}
+                  onClick={() => fetchRoomData()}
                   className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
                   aria-label="Refresh"
                 >
@@ -169,6 +189,27 @@ export default function Home() {
 
       {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        {/* Date Display */}
+        <div className="bg-white rounded-xl shadow-sm p-4 mb-4 flex items-center justify-between">
+          <div>
+            <p className="text-sm text-gray-600">Viewing date</p>
+            <p className="text-lg font-bold text-gray-900">
+              {new Date(selectedDate).toLocaleDateString('en-US', {
+                weekday: 'long',
+                year: 'numeric',
+                month: 'long',
+                day: 'numeric'
+              })}
+            </p>
+          </div>
+          <button
+            onClick={() => setShowDatePicker(true)}
+            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+          >
+            Change Date
+          </button>
+        </div>
+
         {/* Floor Selector */}
         <div className="bg-white rounded-xl shadow-sm p-2 mb-6">
           <div className="flex gap-2">
@@ -291,6 +332,115 @@ export default function Home() {
                   <h3 className="font-semibold text-gray-900">Office/Bureau</h3>
                   <p className="text-sm text-gray-600">Staff offices (not bookable)</p>
                 </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Date Picker Modal */}
+      {showDatePicker && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={() => setShowDatePicker(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white rounded-t-2xl">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-1">Select Date</h2>
+                  <p className="text-blue-100 text-sm">Choose a date to view room availability</p>
+                </div>
+                <button
+                  onClick={() => setShowDatePicker(false)}
+                  className="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition-colors"
+                  aria-label="Close"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              {/* Current Date Display */}
+              <div className="text-center pb-4 border-b">
+                <p className="text-sm text-gray-600 mb-1">Currently viewing</p>
+                <p className="text-lg font-bold text-gray-900">
+                  {new Date(selectedDate).toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric'
+                  })}
+                </p>
+              </div>
+
+              {/* Quick Select Buttons */}
+              <div className="space-y-2">
+                <button
+                  onClick={() => {
+                    const today = getTodayDate();
+                    setSelectedDate(today);
+                    setShowDatePicker(false);
+                  }}
+                  className="w-full py-3 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium rounded-lg transition-colors text-left flex items-center justify-between"
+                >
+                  <span>Today</span>
+                  <span className="text-sm text-blue-600">
+                    {new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}
+                  </span>
+                </button>
+
+                <button
+                  onClick={() => {
+                    const tomorrow = new Date();
+                    tomorrow.setDate(tomorrow.getDate() + 1);
+                    const tomorrowStr = tomorrow.toISOString().split('T')[0];
+                    setSelectedDate(tomorrowStr);
+                    setShowDatePicker(false);
+                  }}
+                  className="w-full py-3 px-4 bg-blue-50 hover:bg-blue-100 text-blue-700 font-medium rounded-lg transition-colors text-left flex items-center justify-between"
+                >
+                  <span>Tomorrow</span>
+                  <span className="text-sm text-blue-600">
+                    {(() => {
+                      const tomorrow = new Date();
+                      tomorrow.setDate(tomorrow.getDate() + 1);
+                      return tomorrow.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+                    })()}
+                  </span>
+                </button>
+              </div>
+
+              {/* Custom Date Picker */}
+              <div className="pt-4 border-t">
+                <label className="block text-sm font-medium text-gray-700 mb-2">
+                  Or choose a specific date
+                </label>
+                <input
+                  type="date"
+                  value={selectedDate}
+                  onChange={(e) => {
+                    setSelectedDate(e.target.value);
+                    setShowDatePicker(false);
+                  }}
+                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all"
+                />
               </div>
             </div>
           </div>

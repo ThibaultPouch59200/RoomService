@@ -9,17 +9,19 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room, onClick }: RoomCardProps) {
-  const statusColor = getStatusColor(room.status);
+  const statusColor = room.type === 'office' ? 'bg-gray-400' : getStatusColor(room.status);
   const statusText = getStatusText(room.status);
+  const isOffice = room.type === 'office';
 
   return (
     <button
       onClick={onClick}
+      disabled={isOffice}
       className={`
         ${statusColor}
         relative overflow-hidden rounded-xl p-4 text-left
         transition-all duration-300 ease-in-out
-        hover:scale-105 hover:shadow-xl
+        ${isOffice ? 'cursor-default' : 'hover:scale-105 hover:shadow-xl cursor-pointer'}
         focus:outline-none focus:ring-4 focus:ring-white/50
         w-full
       `}
@@ -35,19 +37,21 @@ export default function RoomCard({ room, onClick }: RoomCardProps) {
           <span className="inline-block bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-medium">
             {room.type === 'office' ? 'Bureau' : 'Room'}
           </span>
-          <span className="inline-block bg-white/30 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-semibold">
-            {statusText}
-          </span>
+          {!isOffice && (
+            <span className="inline-block bg-white/30 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-semibold">
+              {statusText}
+            </span>
+          )}
         </div>
 
         {/* Next Reservation Info */}
-        {room.status === 'soon' && room.nextReservation && (
+        {!isOffice && room.status === 'soon' && room.nextReservation && (
           <div className="mt-2 text-sm text-white/90">
             <p className="font-medium">Next at {formatTime(room.nextReservation.start_date)}</p>
           </div>
         )}
 
-        {room.status === 'occupied' && room.reservations.length > 0 && (
+        {!isOffice && room.status === 'occupied' && room.reservations.length > 0 && (
           <div className="mt-2 text-sm text-white/90">
             {(() => {
               const now = new Date();
@@ -69,7 +73,7 @@ export default function RoomCard({ room, onClick }: RoomCardProps) {
         )}
 
         {/* Reservation Count */}
-        {room.reservations.length > 0 && (
+        {!isOffice && room.reservations.length > 0 && (
           <div className="mt-3 text-xs text-white/80">
             {room.reservations.length} reservation{room.reservations.length > 1 ? 's' : ''} today
           </div>

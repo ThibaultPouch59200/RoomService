@@ -9,6 +9,7 @@ import RoomDetail from '@/app/components/RoomDetail';
 export default function Home() {
   const [floors, setFloors] = useState<FloorData[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<RoomInfo | null>(null);
+  const [selectedFloor, setSelectedFloor] = useState<number>(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
@@ -172,27 +173,58 @@ export default function Home() {
               <div className="w-4 h-4 bg-status-occupied rounded mr-2"></div>
               <span className="text-sm text-gray-700">Occupied</span>
             </div>
+            <div className="flex items-center">
+              <div className="w-4 h-4 bg-gray-400 rounded mr-2"></div>
+              <span className="text-sm text-gray-700">Office/Bureau</span>
+            </div>
           </div>
         </div>
 
-        {/* Floors */}
-        <div className="space-y-8">
-          {floors.map((floor) => (
-            <section key={floor.floor} className="bg-white rounded-2xl shadow-md p-6">
-              <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">
+        {/* Floor Selector */}
+        <div className="bg-white rounded-xl shadow-sm p-2 mb-6">
+          <div className="flex gap-2">
+            {floors.map((floor) => (
+              <button
+                key={floor.floor}
+                onClick={() => setSelectedFloor(floor.floor)}
+                className={`
+                  flex-1 py-3 px-4 rounded-lg font-semibold transition-all
+                  ${selectedFloor === floor.floor
+                    ? 'bg-blue-600 text-white shadow-md'
+                    : 'bg-gray-100 text-gray-700 hover:bg-gray-200'
+                  }
+                `}
+              >
                 Floor {floor.floor}
-              </h2>
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                {floor.rooms.map((room) => (
-                  <RoomCard
-                    key={room.name}
-                    room={room}
-                    onClick={() => setSelectedRoom(room)}
-                  />
-                ))}
-              </div>
-            </section>
-          ))}
+              </button>
+            ))}
+          </div>
+        </div>
+
+        {/* Selected Floor */}
+        <div className="space-y-8">
+          {floors
+            .filter((floor) => floor.floor === selectedFloor)
+            .map((floor) => (
+              <section key={floor.floor} className="bg-white rounded-2xl shadow-md p-6">
+                <h2 className="text-2xl font-bold text-gray-800 mb-4 border-b pb-3">
+                  Floor {floor.floor}
+                </h2>
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+                  {floor.rooms.map((room) => (
+                    <RoomCard
+                      key={room.name}
+                      room={room}
+                      onClick={() => {
+                        if (room.type !== 'office') {
+                          setSelectedRoom(room);
+                        }
+                      }}
+                    />
+                  ))}
+                </div>
+              </section>
+            ))}
         </div>
       </div>
 

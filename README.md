@@ -61,6 +61,44 @@ npm run lint         # Run ESLint
 npm run type-check   # Run TypeScript type checking
 ```
 
+## Docker Deployment
+
+### Using Docker Compose (Recommended)
+
+1. Build and start the container:
+
+```bash
+docker-compose up -d
+```
+
+2. Stop the container:
+
+```bash
+docker-compose down
+```
+
+3. View logs:
+
+```bash
+docker-compose logs -f
+```
+
+### Using Docker directly
+
+1. Build the image:
+
+```bash
+docker build -t epiroom .
+```
+
+2. Run the container:
+
+```bash
+docker run -p 3000:3000 epiroom
+```
+
+The application will be available at [http://localhost:3000](http://localhost:3000)
+
 ## API
 
 The application fetches data from the Epitech room planning API:

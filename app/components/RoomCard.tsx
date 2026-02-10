@@ -9,7 +9,7 @@ interface RoomCardProps {
 }
 
 export default function RoomCard({ room, onClick }: RoomCardProps) {
-  const statusColor = room.type === 'office' ? 'bg-gray-400' : getStatusColor(room.status);
+  const statusColor = room.type === 'office' ? 'bg-gray-400 dark:bg-gray-600' : getStatusColor(room.status);
   const statusText = getStatusText(room.status);
   const isOffice = room.type === 'office';
 
@@ -34,11 +34,11 @@ export default function RoomCard({ room, onClick }: RoomCardProps) {
 
         {/* Room Type Badge */}
         <div className="flex items-center gap-2 mb-2">
-          <span className="inline-block bg-white/20 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-medium">
+          <span className="inline-block bg-white/20 dark:bg-white/30 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-medium">
             {room.type === 'office' ? 'Bureau' : 'Room'}
           </span>
           {!isOffice && (
-            <span className="inline-block bg-white/30 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-semibold">
+            <span className="inline-block bg-white/30 dark:bg-white/40 backdrop-blur-sm px-2 py-0.5 rounded-full text-xs text-white font-semibold">
               {statusText}
             </span>
           )}

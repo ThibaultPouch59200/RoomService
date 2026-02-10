@@ -27,21 +27,21 @@ export default function RoomDetail({ room, onClose }: RoomDetailProps) {
       onClick={onClose}
     >
       <div
-        className="bg-white rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden"
+        className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-2xl max-h-[85vh] overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white">
+        <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-6 py-5 text-white">
           <div className="flex items-start justify-between">
             <div>
               <h2 className="text-2xl font-bold mb-1">{room.name}</h2>
-              <p className="text-blue-100 text-sm">
+              <p className="text-blue-100 dark:text-blue-200 text-sm">
                 {room.type === 'office' ? 'Bureau' : 'Room'} • Floor {room.floor}
               </p>
             </div>
             <button
               onClick={onClose}
-              className="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition-colors"
+              className="text-white/80 hover:text-white hover:bg-white/10 dark:hover:bg-white/20 rounded-full p-2 transition-colors"
               aria-label="Close"
             >
               <svg
@@ -63,9 +63,9 @@ export default function RoomDetail({ room, onClose }: RoomDetailProps) {
         <div className="overflow-y-auto max-h-[calc(85vh-120px)]">
           {room.reservations.length === 0 ? (
             <div className="p-8 text-center">
-              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 rounded-full mb-4">
+              <div className="inline-flex items-center justify-center w-16 h-16 bg-green-100 dark:bg-green-900/30 rounded-full mb-4">
                 <svg
-                  className="w-8 h-8 text-green-600"
+                  className="w-8 h-8 text-green-600 dark:text-green-400"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -76,12 +76,12 @@ export default function RoomDetail({ room, onClose }: RoomDetailProps) {
                   <path d="M5 13l4 4L19 7"></path>
                 </svg>
               </div>
-              <h3 className="text-xl font-semibold text-gray-800 mb-2">No Reservations</h3>
-              <p className="text-gray-600">This room is free all day!</p>
+              <h3 className="text-xl font-semibold text-gray-800 dark:text-gray-100 mb-2">No Reservations</h3>
+              <p className="text-gray-600 dark:text-gray-400">This room is free all day!</p>
             </div>
           ) : (
             <div className="p-6 space-y-3">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">
+              <h3 className="text-lg font-semibold text-gray-800 dark:text-gray-100 mb-4">
                 Reservations Today ({room.reservations.length})
               </h3>
               {room.reservations.map((reservation) => (
@@ -110,11 +110,16 @@ function ReservationCard({ reservation }: ReservationCardProps) {
     <div
       className={`
         rounded-xl border-2 p-4 transition-all
-        ${isActive ? 'border-red-400 bg-red-50' : isPast ? 'border-gray-200 bg-gray-50 opacity-60' : 'border-blue-200 bg-blue-50'}
+        ${isActive
+          ? 'border-red-400 dark:border-red-500 bg-red-50 dark:bg-red-900/20'
+          : isPast
+            ? 'border-gray-200 dark:border-gray-700 bg-gray-50 dark:bg-gray-800/50 opacity-60'
+            : 'border-blue-200 dark:border-blue-700 bg-blue-50 dark:bg-blue-900/20'
+        }
       `}
     >
       <div className="flex items-start justify-between gap-3 mb-2">
-        <h4 className="font-semibold text-gray-900 flex-1">
+        <h4 className="font-semibold text-gray-900 dark:text-gray-100 flex-1">
           {reservation.title}
         </h4>
         {isActive && (
@@ -135,12 +140,12 @@ function ReservationCard({ reservation }: ReservationCardProps) {
       </div>
 
       {reservation.second_title && (
-        <p className="text-sm text-gray-600 mb-2">{reservation.second_title}</p>
+        <p className="text-sm text-gray-600 dark:text-gray-400 mb-2">{reservation.second_title}</p>
       )}
 
       <div className="flex flex-wrap items-center gap-3 text-sm">
         {/* Time */}
-        <div className="flex items-center text-gray-700">
+        <div className="flex items-center text-gray-700 dark:text-gray-300">
           <svg
             className="w-4 h-4 mr-1.5"
             fill="none"
@@ -159,7 +164,10 @@ function ReservationCard({ reservation }: ReservationCardProps) {
         <span
           className={`
             inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium
-            ${reservation.service_manager === 'intra' ? 'bg-purple-100 text-purple-800' : 'bg-orange-100 text-orange-800'}
+            ${reservation.service_manager === 'intra'
+              ? 'bg-purple-100 dark:bg-purple-900/40 text-purple-800 dark:text-purple-300'
+              : 'bg-orange-100 dark:bg-orange-900/40 text-orange-800 dark:text-orange-300'
+            }
           `}
         >
           {reservation.service_manager === 'intra' ? 'Intra' : 'MyEpitech'}
@@ -167,7 +175,7 @@ function ReservationCard({ reservation }: ReservationCardProps) {
 
         {/* Unit Name */}
         {reservation.unit_name && (
-          <span className="text-gray-600">
+          <span className="text-gray-600 dark:text-gray-400">
             {reservation.unit_name}
           </span>
         )}

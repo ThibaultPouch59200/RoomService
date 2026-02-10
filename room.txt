@@ -1,0 +1,32 @@
+R -> room
+B -> Bureau
+
+Floor 0 :
+R - Stark
+R - Pru'ha
+R - Mei Hatsume
+B - Eliot Alderson
+B - Bulma
+
+Floor 1 :
+R - Microtech
+R - Kanojedo
+R - Arrakis
+R - Pandora
+R - Kaer Morhen
+R - Krikkit
+R - La Matrice
+B - Gallifrey
+B - Le Continental
+B - Poudlar
+
+Floor 2 :
+R - Denis
+R - MacAlistair
+R - Ritchie
+R - Ada Lovelace
+R - Al Jazari
+R - Roland Moreno
+R - Gwen
+R - Barzey
+B - Hedy Lamarr

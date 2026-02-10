@@ -1,0 +1,348 @@
+[
+  {
+    "activities": [
+      {
+        "id": "6054",
+        "title": "",
+        "second_title": "Kick-off - Data Bootcamp",
+        "unit_name": "B1 - Data Science Bootcamp",
+        "start_date": "2026-02-09T08:30:00Z",
+        "end_date": "2026-02-09T09:00:00Z",
+        "room": [
+          {
+            "id": 14,
+            "name": "Pandora"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "4622",
+        "title": "",
+        "second_title": "Data Bootcamp Day01 - AM",
+        "unit_name": "B1 - Data Science Bootcamp",
+        "start_date": "2026-02-09T08:30:00Z",
+        "end_date": "2026-02-09T12:00:00Z",
+        "room": [
+          {
+            "id": 14,
+            "name": "Pandora"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "4623",
+        "title": "",
+        "second_title": "Data Bootcamp Day01 - PM",
+        "unit_name": "B1 - Data Science Bootcamp",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T16:30:00Z",
+        "room": [
+          {
+            "id": 14,
+            "name": "Pandora"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "5901",
+        "title": "",
+        "second_title": "Kick-off - Popeye",
+        "unit_name": "W1 - Popeye",
+        "start_date": "2026-02-09T09:00:00Z",
+        "end_date": "2026-02-09T09:30:00Z",
+        "room": [
+          {
+            "id": 19,
+            "name": "Ada Lovelace"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "6042",
+        "title": "",
+        "second_title": "Bootstrap - Popeye",
+        "unit_name": "W1 - Popeye",
+        "start_date": "2026-02-09T09:30:00Z",
+        "end_date": "2026-02-09T11:30:00Z",
+        "room": [
+          {
+            "id": 19,
+            "name": "Ada Lovelace"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "6045",
+        "title": "",
+        "second_title": "Defense - My Cinema",
+        "unit_name": "W1 - My Cinema",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T14:30:00Z",
+        "room": [
+          {
+            "id": 10,
+            "name": "Krikkit"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "6046",
+        "title": "",
+        "second_title": "Defense - My Cinema",
+        "unit_name": "W1 - My Cinema",
+        "start_date": "2026-02-09T14:30:00Z",
+        "end_date": "2026-02-09T16:00:00Z",
+        "room": [
+          {
+            "id": 10,
+            "name": "Krikkit"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "6353",
+        "title": "",
+        "second_title": "[HUB] FabLab Pixel Art Engine",
+        "unit_name": "B0 - Innovation Hub",
+        "start_date": "2026-02-09T09:00:00Z",
+        "end_date": "2026-02-09T10:30:00Z",
+        "room": [
+          {
+            "id": 22,
+            "name": "Roland Moreno"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "6356",
+        "title": "",
+        "second_title": "[HUB] Créer sa maquette Figma en Vue.js",
+        "unit_name": "B0 - Innovation Hub",
+        "start_date": "2026-02-09T13:30:00Z",
+        "end_date": "2026-02-09T15:00:00Z",
+        "room": [
+          {
+            "id": 22,
+            "name": "Roland Moreno"
+          }
+        ],
+        "service_manager": "my"
+      },
+      {
+        "id": "646664",
+        "title": "",
+        "second_title": "Craque La Boîte (CLB) - S02E05 : Signed",
+        "unit_name": "G0 - User Group - Cybersecurity",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T15:00:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "646987",
+        "title": "",
+        "second_title": "Defense - Bloc 4 - Créer une architecture logicielle pour des applications web - AREA",
+        "unit_name": "G6 - Certification Assessment",
+        "start_date": "2026-02-09T08:00:00Z",
+        "end_date": "2026-02-09T12:00:00Z",
+        "room": [
+          {
+            "id": 9,
+            "name": "La Matrice"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "646988",
+        "title": "",
+        "second_title": "Defense - Bloc 4 - Créer une architecture logicielle pour des applications web - AREA",
+        "unit_name": "G6 - Certification Assessment",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T17:00:00Z",
+        "room": [
+          {
+            "id": 9,
+            "name": "La Matrice"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "646990",
+        "title": "",
+        "second_title": "Defense - Bloc 2 - Concevoir une architecture logicielle - R-Type",
+        "unit_name": "G6 - Certification Assessment",
+        "start_date": "2026-02-09T08:00:00Z",
+        "end_date": "2026-02-09T12:00:00Z",
+        "room": [
+          {
+            "id": 13,
+            "name": "Microtech"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "647053",
+        "title": "",
+        "second_title": "Defense - Bloc 2 - Concevoir une architecture logicielle - R-Type",
+        "unit_name": "G6 - Certification Assessment",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T17:00:00Z",
+        "room": [
+          {
+            "id": 13,
+            "name": "Microtech"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "647894",
+        "title": "PART 3",
+        "second_title": "[HUB] Atelier Pixel Art Procedural Engine",
+        "unit_name": "G0 - Discovery",
+        "start_date": "2026-02-09T09:00:00Z",
+        "end_date": "2026-02-09T10:30:00Z",
+        "room": [
+          {
+            "id": 22,
+            "name": "Roland Moreno"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "648969",
+        "title": "",
+        "second_title": "Point promoting",
+        "unit_name": "G3 - Administrative meetings",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T13:30:00Z",
+        "room": [
+          {
+            "id": 22,
+            "name": "Roland Moreno"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "649167",
+        "title": "[HUB] Développer sa maquette Figma en vue.js",
+        "second_title": "[HUB] Développer sa maquette Figma en Vue.js",
+        "unit_name": "G0 - Discovery",
+        "start_date": "2026-02-09T13:30:00Z",
+        "end_date": "2026-02-09T15:00:00Z",
+        "room": [
+          {
+            "id": 22,
+            "name": "Roland Moreno"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "649289",
+        "title": "",
+        "second_title": "Kick-Off - Unit and NanoTekSpice",
+        "unit_name": "G4 - Object-Oriented Programming",
+        "start_date": "2026-02-09T10:00:00Z",
+        "end_date": "2026-02-09T10:30:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649312",
+        "title": "",
+        "second_title": "Kick-off - Consolidation",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T08:30:00Z",
+        "end_date": "2026-02-09T09:00:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649313",
+        "title": "",
+        "second_title": "The Final Countdown",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T08:30:00Z",
+        "end_date": "2026-02-09T17:30:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649317",
+        "title": "",
+        "second_title": "Project Submission Deadline",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T22:00:00Z",
+        "end_date": "2026-02-09T22:45:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649323",
+        "title": "",
+        "second_title": "Workshop - Work on the idea",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T09:00:00Z",
+        "end_date": "2026-02-09T11:00:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649324",
+        "title": "",
+        "second_title": "Workshop - Work on the idea",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T12:30:00Z",
+        "end_date": "2026-02-09T16:00:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649360",
+        "title": "",
+        "second_title": "Legal Aspects",
+        "unit_name": "G6 - Epitech Innovative Project",
+        "start_date": "2026-02-09T13:00:00Z",
+        "end_date": "2026-02-09T16:00:00Z",
+        "service_manager": "intra"
+      },
+      {
+        "id": "649936",
+        "title": "",
+        "second_title": "Présences FP S07",
+        "unit_name": "G0 - Room Reservation",
+        "start_date": "2026-02-09T08:15:00Z",
+        "end_date": "2026-02-09T08:30:00Z",
+        "room": [
+          {
+            "id": 11,
+            "name": "Kanojedo"
+          }
+        ],
+        "service_manager": "intra"
+      },
+      {
+        "id": "649937",
+        "title": "",
+        "second_title": "Présences FP S07",
+        "unit_name": "G0 - Room Reservation",
+        "start_date": "2026-02-09T12:45:00Z",
+        "end_date": "2026-02-09T13:00:00Z",
+        "room": [
+          {
+            "id": 11,
+            "name": "Kanojedo"
+          }
+        ],
+        "service_manager": "intra"
+      }
+    ]
+  }
+]

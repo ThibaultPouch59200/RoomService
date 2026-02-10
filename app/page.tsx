@@ -10,6 +10,7 @@ export default function Home() {
   const [floors, setFloors] = useState<FloorData[]>([]);
   const [selectedRoom, setSelectedRoom] = useState<RoomInfo | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<number>(0);
+  const [showLegend, setShowLegend] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
@@ -127,59 +128,47 @@ export default function Home() {
               <h1 className="text-3xl font-bold text-gray-900">EpiRoom</h1>
               <p className="text-sm text-gray-600 mt-1">Epitech Lille Room Availability</p>
             </div>
-            <div className="text-right">
+            <div className="text-right flex items-center gap-2">
               <button
-                onClick={fetchRoomData}
-                className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
-                aria-label="Refresh"
+                onClick={() => setShowLegend(true)}
+                className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 text-gray-700 font-bold rounded-lg transition-colors"
+                aria-label="Show legend"
+                title="Show legend"
               >
-                <svg
-                  className="w-5 h-5 mr-2"
-                  fill="none"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                </svg>
-                Refresh
+                ?
               </button>
-              {lastUpdate && (
-                <p className="text-xs text-gray-500 mt-1">
-                  Updated {lastUpdate.toLocaleTimeString()}
-                </p>
-              )}
+              <div>
+                <button
+                  onClick={fetchRoomData}
+                  className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors"
+                  aria-label="Refresh"
+                >
+                  <svg
+                    className="w-5 h-5 mr-2"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
+                  </svg>
+                  Refresh
+                </button>
+                {lastUpdate && (
+                  <p className="text-xs text-gray-500 mt-1">
+                    Updated {lastUpdate.toLocaleTimeString()}
+                  </p>
+                )}
+              </div>
             </div>
           </div>
         </div>
       </header>
 
-      {/* Legend */}
+      {/* Content */}
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
-        <div className="bg-white rounded-xl shadow-sm p-4 mb-6">
-          <h2 className="text-sm font-semibold text-gray-700 mb-3">Status Legend</h2>
-          <div className="flex flex-wrap gap-4">
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-status-free rounded mr-2"></div>
-              <span className="text-sm text-gray-700">Available</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-status-soon rounded mr-2"></div>
-              <span className="text-sm text-gray-700">Soon Occupied (≤1h)</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-status-occupied rounded mr-2"></div>
-              <span className="text-sm text-gray-700">Occupied</span>
-            </div>
-            <div className="flex items-center">
-              <div className="w-4 h-4 bg-gray-400 rounded mr-2"></div>
-              <span className="text-sm text-gray-700">Office/Bureau</span>
-            </div>
-          </div>
-        </div>
-
         {/* Floor Selector */}
         <div className="bg-white rounded-xl shadow-sm p-2 mb-6">
           <div className="flex gap-2">
@@ -231,6 +220,81 @@ export default function Home() {
       {/* Room Detail Modal */}
       {selectedRoom && (
         <RoomDetail room={selectedRoom} onClose={() => setSelectedRoom(null)} />
+      )}
+
+      {/* Legend Modal */}
+      {showLegend && (
+        <div
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
+          onClick={() => setShowLegend(false)}
+        >
+          <div
+            className="bg-white rounded-2xl shadow-2xl w-full max-w-md"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Header */}
+            <div className="bg-gradient-to-r from-blue-600 to-blue-700 px-6 py-5 text-white rounded-t-2xl">
+              <div className="flex items-start justify-between">
+                <div>
+                  <h2 className="text-2xl font-bold mb-1">Status Legend</h2>
+                  <p className="text-blue-100 text-sm">Room availability indicators</p>
+                </div>
+                <button
+                  onClick={() => setShowLegend(false)}
+                  className="text-white/80 hover:text-white hover:bg-white/10 rounded-full p-2 transition-colors"
+                  aria-label="Close"
+                >
+                  <svg
+                    className="w-6 h-6"
+                    fill="none"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    viewBox="0 0 24 24"
+                    stroke="currentColor"
+                  >
+                    <path d="M6 18L18 6M6 6l12 12"></path>
+                  </svg>
+                </button>
+              </div>
+            </div>
+
+            {/* Content */}
+            <div className="p-6 space-y-4">
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-status-free rounded-lg flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Available</h3>
+                  <p className="text-sm text-gray-600">No reservations for this room</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-status-soon rounded-lg flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Soon Occupied</h3>
+                  <p className="text-sm text-gray-600">Reserved within 1 hour or less</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-status-occupied rounded-lg flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Occupied</h3>
+                  <p className="text-sm text-gray-600">Currently reserved and in use</p>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-3">
+                <div className="w-12 h-12 bg-gray-400 rounded-lg flex-shrink-0"></div>
+                <div>
+                  <h3 className="font-semibold text-gray-900">Office/Bureau</h3>
+                  <p className="text-sm text-gray-600">Staff offices (not bookable)</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
       )}
 
       {/* Footer */}

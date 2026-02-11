@@ -203,12 +203,6 @@ export default function Home() {
               })}
             </p>
           </div>
-          <button
-            onClick={() => setShowDatePicker(true)}
-            className="px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-colors"
-          >
-            Change Date
-          </button>
         </div>
 
         {/* Floor Selector */}

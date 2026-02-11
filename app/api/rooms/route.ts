@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const response = await fetch(
-      `https://lille-epiroom.epitest.eu/api/v1/fastPlanning?startDate=${startDate}&endDate=${endDate}`,
+      `https://lille-epiroom.epitest.eu/api/v1/planning?startDate=${startDate}&endDate=${endDate}`,
       {
         headers: {
           'Accept': 'application/json',

@@ -104,7 +104,7 @@ The application will be available at [http://localhost:3000](http://localhost:30
 The application fetches data from the Epitech room planning API:
 
 ```
-https://lille-epiroom.epitest.eu/api/v1/fastPlanning?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
+https://lille-epiroom.epitest.eu/api/v1/planning?startDate=YYYY-MM-DD&endDate=YYYY-MM-DD
 ```
 
 ## Room Configuration

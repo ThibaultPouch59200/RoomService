@@ -89,13 +89,16 @@ export function processActivities(activities: Activity[]): FloorData[] {
   const roomReservations = new Map<string, Activity[]>();
 
   // Group activities by room name
+  // Note: An activity can have multiple rooms, so we add it to each room's reservations
   activities.forEach((activity) => {
     if (activity.room && activity.room.length > 0) {
-      const roomName = activity.room[0].name;
-      if (!roomReservations.has(roomName)) {
-        roomReservations.set(roomName, []);
-      }
-      roomReservations.get(roomName)!.push(activity);
+      activity.room.forEach((room) => {
+        const roomName = room.name;
+        if (!roomReservations.has(roomName)) {
+          roomReservations.set(roomName, []);
+        }
+        roomReservations.get(roomName)!.push(activity);
+      });
     }
   });
 

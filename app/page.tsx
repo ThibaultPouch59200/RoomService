@@ -6,6 +6,7 @@ import { processActivities, getTodayDate } from '@/app/lib/roomUtils';
 import RoomCard from '@/app/components/RoomCard';
 import RoomDetail from '@/app/components/RoomDetail';
 import ThemeToggle from '@/app/components/ThemeToggle';
+import FloorMap from '@/app/components/FloorMap';
 
 export default function Home() {
   const [floors, setFloors] = useState<FloorData[]>([]);
@@ -226,29 +227,52 @@ export default function Home() {
           </div>
         </div>
 
-        {/* Selected Floor */}
+        {/* Selected Floor - Desktop Layout with Sidebar + Floor Map */}
         <div className="space-y-8">
           {floors
             .filter((floor) => floor.floor === selectedFloor)
             .map((floor) => (
-              <section key={floor.floor} className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 border-b dark:border-gray-700 pb-3">
-                  Floor {floor.floor}
-                </h2>
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-                  {floor.rooms.map((room) => (
-                    <RoomCard
-                      key={room.name}
-                      room={room}
-                      onClick={() => {
+              <div key={floor.floor} className="flex flex-col lg:flex-row gap-6">
+                {/* Left Sidebar - Room List */}
+                <aside className="w-full lg:w-80 xl:w-96 flex-shrink-0">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 sticky top-24">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 border-b dark:border-gray-700 pb-3">
+                      Floor {floor.floor} Rooms
+                    </h2>
+                    <div className="space-y-3 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2">
+                      {floor.rooms.map((room) => (
+                        <RoomCard
+                          key={room.name}
+                          room={room}
+                          onClick={() => {
+                            if (room.type !== 'office') {
+                              setSelectedRoom(room);
+                            }
+                          }}
+                        />
+                      ))}
+                    </div>
+                  </div>
+                </aside>
+
+                {/* Right - Floor Plan Map */}
+                <div className="flex-1">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
+                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 border-b dark:border-gray-700 pb-3">
+                      Floor Plan
+                    </h2>
+                    <FloorMap
+                      floor={floor.floor}
+                      rooms={floor.rooms}
+                      onRoomClick={(room) => {
                         if (room.type !== 'office') {
                           setSelectedRoom(room);
                         }
                       }}
                     />
-                  ))}
+                  </div>
                 </div>
-              </section>
+              </div>
             ))}
         </div>
       </div>

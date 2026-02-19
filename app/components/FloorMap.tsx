@@ -10,114 +10,124 @@ interface FloorMapProps {
 }
 
 // Per-floor SVG viewBox dimensions
-const SVG_DIMS: Record<number, { w: number; h: number }> = {
+const SVG_VIEWBOX: Record<number, { w: number; h: number }> = {
   0: { w: 1137, h: 627 },
   1: { w: 1290, h: 764 },
   2: { w: 1255, h: 764 },
   3: { w: 750,  h: 432 },
 };
 
-// Bounding boxes extracted from SVG group <rect>/<path> elements.
-// x, y = top-left as % of SVG viewBox. w, h = size as % of SVG viewBox.
+// Bounding boxes in absolute SVG coordinate space (same coordinate system as viewBox).
+// Extracted directly from <rect> elements inside each room's <g id="..."> group.
 // Keys must match room.name exactly as defined in ROOM_CONFIG.
 const roomRects: Record<string, { x: number; y: number; w: number; h: number }> = {
-  // Floor 0 (1137×627)
-  'Bulma':          { x: 19.21, y:  0.56, w: 16.58, h: 16.51 },
-  'Eliot Alderson': { x:  0.53, y:  0.56, w:  8.36, h: 24.40 },
-  'Stark':          { x: 19.26, y: 25.28, w: 16.49, h: 18.74 },
-  "Pru'ha":         { x:  0.53, y: 61.73, w: 35.27, h: 37.55 },
-  'Mei Hatsume':    { x: 36.06, y: 67.15, w: 14.95, h: 32.13 },
+  // Floor 0 (viewBox 1137×627)
+  'Bulma':          { x: 218.5, y:   3.5, w: 188.5, h: 103.5 },
+  'Eliot Alderson': { x:   6.0, y:   3.5, w:  95.0, h: 153.0 },
+  'Stark':          { x: 219.0, y: 158.5, w: 187.5, h: 117.5 },
+  "Pru'ha":         { x:   6.0, y: 387.0, w: 401.0, h: 235.4 },
+  'Mei Hatsume':    { x: 410.0, y: 421.0, w: 170.0, h: 201.5 },
 
-  // Floor 1 (1290×764)
-  'Microtech':      { x:  0.16, y: 18.52, w: 16.20, h: 19.96 },
-  'Pandora':        { x:  0.31, y: 80.37, w: 31.16, h: 19.11 },
-  'Poudlar':        { x: 71.76, y: 22.52, w: 20.66, h: 19.29 },
-  'Gallifrey':      { x: 31.78, y: 80.37, w: 12.79, h: 19.11 },
-  'Le Continental': { x: 44.88, y: 80.37, w:  7.91, h: 19.11 },
-  'Kaer Morhen':    { x: 53.10, y: 80.37, w: 12.25, h: 19.10 },
-  'La Matrice':     { x: 84.29, y: 60.80, w: 12.06, h: 19.50 },
-  'Krikkit':        { x: 84.19, y: 47.07, w: 10.12, h: 20.43 },
+  // Floor 1 (viewBox 1290×764)
+  'Microtech':      { x:   2.0, y: 141.5, w: 209.0, h: 152.5 },
+  'Pandora':        { x:   4.0, y: 614.0, w: 402.0, h: 146.0 },
+  'Poudlar':        { x: 925.7, y: 172.1, w: 266.5, h: 147.3 },
+  'Gallifrey':      { x: 410.0, y: 614.0, w: 165.0, h: 146.0 },
+  'Le Continental': { x: 579.0, y: 614.0, w: 102.0, h: 146.0 },
+  'Kaer Morhen':    { x: 685.0, y: 614.1, w: 158.0, h: 145.9 },
+  // Rotated bounding boxes (paths with rotate transform)
+  'La Matrice':     { x: 1087.3, y: 464.5, w: 155.6, h: 149.0 },
+  'Krikkit':        { x: 1086.0, y: 359.6, w: 130.5, h: 156.1 },
 
-  // Floor 2 (1255×764)
-  'Denis':          { x:  0.16, y: 18.46, w: 16.65, h: 20.03 },
-  'MacAlistair':    { x:  0.32, y: 39.01, w: 16.41, h: 34.03 },
-  'Ritchie':        { x: 17.05, y: 38.74, w: 15.02, h: 34.29 },
-  'Ada Lovelace':   { x:  0.32, y: 80.37, w: 27.01, h: 19.11 },
-  'Hedy Lamarr':    { x: 40.72, y: 80.37, w: 17.93, h: 19.11 },
-  'Al Jazari':      { x: 58.96, y: 80.37, w:  8.29, h: 19.11 },
-  'Roland Moreno':  { x: 69.89, y: 14.22, w:  6.77, h: 41.10 },
-  'Gwen':           { x: 77.92, y: 12.12, w: 11.94, h: 39.32 },
-  'Barzey':         { x: 83.06, y: 44.91, w: 15.88, h: 35.33 },
+  // Floor 2 (viewBox 1255×764)
+  'Denis':          { x:   2.0, y: 141.0, w: 209.0, h: 153.0 },
+  'MacAlistair':    { x:   4.0, y: 298.0, w: 206.0, h: 260.0 },
+  'Ritchie':        { x: 214.0, y: 296.0, w: 188.5, h: 262.0 },
+  'Ada Lovelace':   { x:   4.0, y: 614.0, w: 339.0, h: 146.0 },
+  'Hedy Lamarr':    { x: 511.0, y: 614.0, w: 225.0, h: 146.0 },
+  'Al Jazari':      { x: 740.0, y: 614.0, w: 104.0, h: 146.0 },
+  'Roland Moreno':  { x: 877.1, y: 108.7, w:  84.9, h: 314.0 },
+  'Gwen':           { x: 977.9, y:  92.6, w: 149.9, h: 300.4 },
+  // Rotated bounding box
+  'Barzey':         { x: 1042.4, y: 343.1, w: 199.3, h: 269.9 },
+
+  // Floor 3 (viewBox 750×432) — rooms defined as paths
+  'TensorFlow':     { x: 215.0, y: 123.0, w: 186.5, h: 140.0 },
 };
 
 export default function FloorMap({ floor, rooms, onRoomClick }: FloorMapProps) {
+  const { w: vbW, h: vbH } = SVG_VIEWBOX[floor] ?? { w: 1137, h: 627 };
   const svgPath = `/svg/Z${floor}-Floor.svg`;
-  const { w: svgW, h: svgH } = SVG_DIMS[floor] ?? { w: 1137, h: 627 };
 
   return (
     <div className="w-full h-full flex items-center justify-center">
-      {/* Aspect-ratio container that fills available space */}
-      <div
-        className="relative overflow-hidden rounded-xl"
-        style={{
-          width: '100%',
-          maxHeight: '100%',
-          aspectRatio: `${svgW} / ${svgH}`,
-        }}
+      {/*
+        Use an inline <svg> with the exact viewBox so all overlays are positioned
+        in the same coordinate system as the floor plan drawing.
+        preserveAspectRatio="xMidYMid meet" keeps the image undistorted.
+      */}
+      <svg
+        viewBox={`0 0 ${vbW} ${vbH}`}
+        className="w-full h-full"
+        style={{ maxHeight: '100%' }}
       >
-        {/* Floor Plan SVG */}
-        <img
-          src={svgPath}
-          alt={`Floor ${floor} plan`}
-          className="absolute inset-0 w-full h-full"
+        {/* Floor plan as background image, stretched to fill the viewBox exactly */}
+        <image
+          href={svgPath}
+          x="0"
+          y="0"
+          width={vbW}
+          height={vbH}
+          preserveAspectRatio="none"
         />
 
-        {/* Room overlays */}
+        {/* Room overlays using exact SVG coordinates */}
         {rooms.map((room) => {
           const rect = roomRects[room.name];
           if (!rect) return null;
 
-          const statusColor = room.type === 'office'
+          const isOffice = room.type === 'office';
+          const statusColor = isOffice
             ? 'bg-gray-400 dark:bg-gray-600'
             : getStatusColor(room.status);
-          const isOffice = room.type === 'office';
 
           return (
-            <button
+            <foreignObject
               key={room.name}
-              onClick={() => !isOffice && onRoomClick(room)}
-              disabled={isOffice}
-              style={{
-                position: 'absolute',
-                left:   `${rect.x}%`,
-                top:    `${rect.y}%`,
-                width:  `${rect.w}%`,
-                height: `${rect.h}%`,
-              }}
-              className={`
-                ${statusColor} opacity-80
-                flex flex-col items-center justify-center text-center
-                transition-all duration-300 ease-in-out overflow-hidden
-                ${isOffice ? 'cursor-default' : 'hover:opacity-100 hover:shadow-xl cursor-pointer hover:z-10'}
-                focus:outline-none
-              `}
+              x={rect.x}
+              y={rect.y}
+              width={rect.w}
+              height={rect.h}
             >
-              {/* Gradient overlay */}
-              <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
-              <div className="relative z-10 px-1">
-                <p className="text-[9px] sm:text-[11px] font-bold text-white leading-tight line-clamp-2">
+              <button
+                // @ts-ignore — xmlns required for SVG foreignObject
+                xmlns="http://www.w3.org/1999/xhtml"
+                onClick={() => !isOffice && onRoomClick(room)}
+                disabled={isOffice}
+                className={`
+                  ${statusColor} opacity-75
+                  w-full h-full flex flex-col items-center justify-center
+                  text-center overflow-hidden
+                  transition-opacity duration-200
+                  ${isOffice ? 'cursor-default' : 'hover:opacity-95 cursor-pointer'}
+                  focus:outline-none
+                `}
+              >
+                <div className="absolute inset-0 bg-gradient-to-br from-white/10 to-transparent pointer-events-none" />
+                <span className="relative z-10 text-[9px] sm:text-[11px] font-bold text-white leading-tight px-1 line-clamp-2 text-center">
                   {room.name}
-                </p>
+                </span>
                 {!isOffice && (
-                  <p className="text-[7px] sm:text-[9px] text-white/80 mt-0.5 font-medium">
+                  <span className="relative z-10 text-[7px] sm:text-[9px] text-white/80 mt-0.5 font-medium">
                     {getStatusText(room.status)}
-                  </p>
+                  </span>
                 )}
-              </div>
-            </button>
+              </button>
+            </foreignObject>
           );
         })}
-      </div>
+      </svg>
     </div>
   );
 }
+

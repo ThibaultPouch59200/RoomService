@@ -21,7 +21,7 @@ export default function RoomCard({ room, onClick }: RoomCardProps) {
         ${statusColor}
         relative overflow-hidden rounded-xl p-4 text-left
         transition-all duration-300 ease-in-out
-        ${isOffice ? 'cursor-default' : 'hover:scale-105 hover:shadow-xl cursor-pointer'}
+        ${isOffice ? 'cursor-default' : 'hover:brightness-110 hover:shadow-xl cursor-pointer'}
         focus:outline-none focus:ring-4 focus:ring-white/50
         w-full
       `}

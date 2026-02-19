@@ -123,7 +123,7 @@ export default function Home() {
   }
 
   return (
-    <main className="min-h-screen bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
+    <main className="h-screen flex flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-gray-200 dark:border-gray-700">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
@@ -190,9 +190,9 @@ export default function Home() {
       </header>
 
       {/* Content */}
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <div className="flex-1 flex flex-col overflow-hidden min-h-0 px-4 sm:px-6 lg:px-8 py-4">
         {/* Date Display */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-4 mb-4 flex items-center justify-between">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-3 mb-2 flex items-center justify-between">
           <div>
             <p className="text-sm text-gray-600 dark:text-gray-400">Viewing date</p>
             <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
@@ -207,7 +207,7 @@ export default function Home() {
         </div>
 
         {/* Floor Selector */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-2 mb-6">
+        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-2 mb-3">
           <div className="flex gap-2">
             {floors.map((floor) => (
               <button
@@ -228,18 +228,18 @@ export default function Home() {
         </div>
 
         {/* Selected Floor - Desktop Layout with Sidebar + Floor Map */}
-        <div className="space-y-8">
+        <div className="flex-1 flex flex-col min-h-0">
           {floors
             .filter((floor) => floor.floor === selectedFloor)
             .map((floor) => (
-              <div key={floor.floor} className="flex flex-col lg:flex-row gap-6">
+              <div key={floor.floor} className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
                 {/* Left Sidebar - Room List */}
-                <aside className="w-full lg:w-80 xl:w-96 flex-shrink-0">
-                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6 sticky top-24">
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 border-b dark:border-gray-700 pb-3">
+                <aside className="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col min-h-0">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 flex-1 flex flex-col min-h-0">
+                    <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3 border-b dark:border-gray-700 pb-2">
                       Floor {floor.floor} Rooms
                     </h2>
-                    <div className="space-y-3 max-h-[calc(100vh-16rem)] overflow-y-auto pr-2">
+                    <div className="space-y-3 flex-1 min-h-0 overflow-y-auto pr-2">
                       {floor.rooms.map((room) => (
                         <RoomCard
                           key={room.name}
@@ -256,20 +256,22 @@ export default function Home() {
                 </aside>
 
                 {/* Right - Floor Plan Map */}
-                <div className="flex-1">
-                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-6">
-                    <h2 className="text-2xl font-bold text-gray-800 dark:text-gray-100 mb-4 border-b dark:border-gray-700 pb-3">
+                <div className="flex-1 flex flex-col min-h-0">
+                  <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 flex-1 flex flex-col min-h-0">
+                    <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3 border-b dark:border-gray-700 pb-2">
                       Floor Plan
                     </h2>
-                    <FloorMap
-                      floor={floor.floor}
-                      rooms={floor.rooms}
-                      onRoomClick={(room) => {
-                        if (room.type !== 'office') {
-                          setSelectedRoom(room);
-                        }
-                      }}
-                    />
+                    <div className="flex-1 min-h-0 w-full">
+                      <FloorMap
+                        floor={floor.floor}
+                        rooms={floor.rooms}
+                        onRoomClick={(room) => {
+                          if (room.type !== 'office') {
+                            setSelectedRoom(room);
+                          }
+                        }}
+                      />
+                    </div>
                   </div>
                 </div>
               </div>

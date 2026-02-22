@@ -5,7 +5,6 @@ import { ApiResponse, RoomInfo, FloorData } from '@/app/types';
 import { processActivities, getTodayDate } from '@/app/lib/roomUtils';
 import RoomCard from '@/app/components/RoomCard';
 import RoomDetail from '@/app/components/RoomDetail';
-import ThemeToggle from '@/app/components/ThemeToggle';
 import FloorMap from '@/app/components/FloorMap';
 
 export default function Home() {
@@ -13,7 +12,6 @@ export default function Home() {
   const [selectedRoom, setSelectedRoom] = useState<RoomInfo | null>(null);
   const [selectedFloor, setSelectedFloor] = useState<number>(0);
   const [selectedDate, setSelectedDate] = useState<string>(getTodayDate());
-  const [showLegend, setShowLegend] = useState(false);
   const [showDatePicker, setShowDatePicker] = useState(false);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
@@ -152,22 +150,12 @@ export default function Home() {
               <p className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-tight">
                 {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', {
                   weekday: 'long',
-                  month: 'long',
+                  month: 'short',
                   day: 'numeric',
-                  year: 'numeric',
                 })}
               </p>
             </button>
             <div className="flex items-center gap-2 flex-shrink-0">
-              <ThemeToggle />
-              <button
-                onClick={() => setShowLegend(true)}
-                className="inline-flex items-center justify-center w-9 h-9 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg transition-colors"
-                aria-label="Show legend"
-                title="Show legend"
-              >
-                ?
-              </button>
               <button
                 onClick={() => fetchRoomData()}
                 className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-colors text-sm"
@@ -222,7 +210,7 @@ export default function Home() {
             .map((floor) => (
               <div key={floor.floor} className="flex flex-col lg:flex-row gap-4 flex-1 min-h-0">
                 {/* Left Sidebar - Room List */}
-                <aside className="w-full lg:w-72 xl:w-80 flex-shrink-0 flex flex-col min-h-0">
+                <aside className="w-full lg:w-72 xl:w-80 flex-1 lg:flex-none flex flex-col min-h-0">
                   <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 flex-1 flex flex-col min-h-0">
                     <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3 border-b dark:border-gray-700 pb-2">
                       Floor {floor.floor} Rooms
@@ -243,8 +231,8 @@ export default function Home() {
                   </div>
                 </aside>
 
-                {/* Right - Floor Plan Map */}
-                <div className="flex-1 flex flex-col min-h-0">
+                {/* Right - Floor Plan Map (hidden on mobile) */}
+                <div className="hidden lg:flex flex-1 flex-col min-h-0">
                   <div className="bg-white dark:bg-gray-800 rounded-2xl shadow-md p-4 flex-1 flex flex-col min-h-0">
                     <h2 className="text-lg font-bold text-gray-800 dark:text-gray-100 mb-3 border-b dark:border-gray-700 pb-2">
                       Floor Plan
@@ -272,80 +260,6 @@ export default function Home() {
         <RoomDetail room={selectedRoom} onClose={() => setSelectedRoom(null)} />
       )}
 
-      {/* Legend Modal */}
-      {showLegend && (
-        <div
-          className="fixed inset-0 z-50 flex items-center justify-center bg-black/60 backdrop-blur-sm p-4"
-          onClick={() => setShowLegend(false)}
-        >
-          <div
-            className="bg-white dark:bg-gray-800 rounded-2xl shadow-2xl w-full max-w-md"
-            onClick={(e) => e.stopPropagation()}
-          >
-            {/* Header */}
-            <div className="bg-gradient-to-r from-blue-600 to-blue-700 dark:from-blue-700 dark:to-blue-800 px-6 py-5 text-white rounded-t-2xl">
-              <div className="flex items-start justify-between">
-                <div>
-                  <h2 className="text-2xl font-bold mb-1">Status Legend</h2>
-                  <p className="text-blue-100 dark:text-blue-200 text-sm">Room availability indicators</p>
-                </div>
-                <button
-                  onClick={() => setShowLegend(false)}
-                  className="text-white/80 hover:text-white hover:bg-white/10 dark:hover:bg-white/20 rounded-full p-2 transition-colors"
-                  aria-label="Close"
-                >
-                  <svg
-                    className="w-6 h-6"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M6 18L18 6M6 6l12 12"></path>
-                  </svg>
-                </button>
-              </div>
-            </div>
-
-            {/* Content */}
-            <div className="p-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-status-free rounded-lg flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Available</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">No reservations for this room</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-status-soon rounded-lg flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Soon Occupied</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Reserved within 1 hour or less</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-status-occupied rounded-lg flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Occupied</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Currently reserved and in use</p>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-3">
-                <div className="w-12 h-12 bg-gray-400 dark:bg-gray-600 rounded-lg flex-shrink-0"></div>
-                <div>
-                  <h3 className="font-semibold text-gray-900 dark:text-gray-100">Office/Bureau</h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">Staff offices (not bookable)</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )}
 
       {/* Date Picker Modal */}
       {showDatePicker && (
@@ -390,11 +304,10 @@ export default function Home() {
               <div className="text-center pb-4 border-b dark:border-gray-700">
                 <p className="text-sm text-gray-600 dark:text-gray-400 mb-1">Currently viewing</p>
                 <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-                  {new Date(selectedDate).toLocaleDateString('en-US', {
+                  {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', {
                     weekday: 'long',
-                    year: 'numeric',
-                    month: 'long',
-                    day: 'numeric'
+                    month: 'short',
+                    day: 'numeric',
                   })}
                 </p>
               </div>

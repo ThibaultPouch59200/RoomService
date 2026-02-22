@@ -126,21 +126,45 @@ export default function Home() {
     <main className="h-screen flex flex-col overflow-hidden bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-gray-800 dark:to-gray-900">
       {/* Header */}
       <header className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-md shadow-sm sticky top-0 z-40 border-b border-gray-200 dark:border-gray-700">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
-          <div className="flex items-center justify-between">
-            <div>
-              <h1 className="text-3xl font-bold text-gray-900 dark:text-gray-100">EpiRoom</h1>
-              <p className="text-sm text-gray-600 dark:text-gray-400 mt-1">Epitech Lille Room Availability</p>
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3">
+          <div className="flex items-center justify-between gap-4">
+            <div className="flex-shrink-0">
+              <h1 className="text-2xl font-bold text-gray-900 dark:text-gray-100">EpiRoom</h1>
             </div>
-            <div className="text-right flex items-center gap-2">
+            {/* Date — clickable to open picker */}
+            <button
+              onClick={() => setShowDatePicker(true)}
+              className="flex-1 text-center hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg px-3 py-1.5 transition-colors"
+              title="Select date"
+            >
+              <p className="text-xs text-gray-500 dark:text-gray-400">Viewing</p>
+              <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+                {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', {
+                  weekday: 'short',
+                  month: 'short',
+                  day: 'numeric',
+                  year: 'numeric',
+                })}
+              </p>
+            </button>
+            <div className="flex items-center gap-2 flex-shrink-0">
+              <ThemeToggle />
               <button
-                onClick={() => setShowDatePicker(true)}
-                className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 rounded-lg transition-colors"
-                aria-label="Select date"
-                title="Select date"
+                onClick={() => setShowLegend(true)}
+                className="inline-flex items-center justify-center w-9 h-9 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg transition-colors"
+                aria-label="Show legend"
+                title="Show legend"
+              >
+                ?
+              </button>
+              <button
+                onClick={() => fetchRoomData()}
+                className="inline-flex items-center px-3 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-colors text-sm"
+                aria-label="Refresh"
+                title={lastUpdate ? `Updated ${lastUpdate.toLocaleTimeString()}` : 'Refresh'}
               >
                 <svg
-                  className="w-5 h-5"
+                  className="w-4 h-4 sm:mr-1.5"
                   fill="none"
                   strokeLinecap="round"
                   strokeLinejoin="round"
@@ -148,42 +172,10 @@ export default function Home() {
                   viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
-                  <path d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path>
+                  <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
                 </svg>
+                <span className="hidden sm:inline">Refresh</span>
               </button>
-              <button
-                onClick={() => setShowLegend(true)}
-                className="inline-flex items-center justify-center w-10 h-10 bg-gray-100 hover:bg-gray-200 dark:bg-gray-700 dark:hover:bg-gray-600 text-gray-700 dark:text-gray-300 font-bold rounded-lg transition-colors"
-                aria-label="Show legend"
-                title="Show legend"
-              >
-                ?
-              </button>
-              <div>
-                <button
-                  onClick={() => fetchRoomData()}
-                  className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 dark:bg-blue-500 dark:hover:bg-blue-600 text-white font-medium rounded-lg transition-colors"
-                  aria-label="Refresh"
-                >
-                  <svg
-                    className="w-5 h-5 mr-2"
-                    fill="none"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
-                    viewBox="0 0 24 24"
-                    stroke="currentColor"
-                  >
-                    <path d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"></path>
-                  </svg>
-                  Refresh
-                </button>
-                {lastUpdate && (
-                  <p className="text-xs text-gray-500 dark:text-gray-400 mt-1">
-                    Updated {lastUpdate.toLocaleTimeString()}
-                  </p>
-                )}
-              </div>
             </div>
           </div>
         </div>
@@ -191,21 +183,6 @@ export default function Home() {
 
       {/* Content */}
       <div className="flex-1 flex flex-col overflow-hidden min-h-0 px-4 sm:px-6 lg:px-8 py-4">
-        {/* Date Display */}
-        <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-3 mb-2 flex items-center justify-between">
-          <div>
-            <p className="text-sm text-gray-600 dark:text-gray-400">Viewing date</p>
-            <p className="text-lg font-bold text-gray-900 dark:text-gray-100">
-              {new Date(selectedDate).toLocaleDateString('en-US', {
-                weekday: 'long',
-                year: 'numeric',
-                month: 'long',
-                day: 'numeric'
-              })}
-            </p>
-          </div>
-        </div>
-
         {/* Floor Selector */}
         <div className="bg-white dark:bg-gray-800 rounded-xl shadow-sm p-2 mb-3">
           <div className="flex gap-2">
@@ -468,16 +445,6 @@ export default function Home() {
         </div>
       )}
 
-      {/* Footer */}
-      <footer className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 mt-12">
-        <div className="flex items-center justify-center gap-4">
-          <div className="text-center text-sm text-gray-600 dark:text-gray-400">
-            <p>EpiRoom - Real-time room availability for Epitech Lille</p>
-            <p className="mt-1">Updates automatically every 2 minutes</p>
-          </div>
-          <ThemeToggle />
-        </div>
-      </footer>
     </main>
   );
 }

@@ -88,7 +88,7 @@ export default function FloorMap({ floor, rooms, onRoomClick }: FloorMapProps) {
           const { cx, cy } = getCentroid(data.points);
           const pointsStr = toSVGPoints(data.points);
           const words = room.name.split(' ');
-          const lineH = 12;
+          const lineH = 17;
           const totalLines = words.length + (isOffice ? 0 : 1);
           const startY = cy - ((totalLines - 1) * lineH) / 2;
 
@@ -106,7 +106,7 @@ export default function FloorMap({ floor, rooms, onRoomClick }: FloorMapProps) {
                   y={startY + i * lineH}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fontSize="11"
+                  fontSize="16"
                   fontWeight="bold"
                   fill="white"
                   style={{ pointerEvents: 'none', userSelect: 'none' }}
@@ -120,7 +120,7 @@ export default function FloorMap({ floor, rooms, onRoomClick }: FloorMapProps) {
                   y={startY + words.length * lineH}
                   textAnchor="middle"
                   dominantBaseline="middle"
-                  fontSize="9"
+                  fontSize="13"
                   fill="rgba(255,255,255,0.85)"
                   style={{ pointerEvents: 'none', userSelect: 'none' }}
                 >

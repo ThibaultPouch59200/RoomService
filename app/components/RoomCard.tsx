@@ -72,12 +72,16 @@ export default function RoomCard({ room, onClick }: RoomCardProps) {
           </div>
         )}
 
-        {/* Reservation Count */}
-        {!isOffice && room.reservations.length > 0 && (
-          <div className="mt-3 text-xs text-white/80">
-            {room.reservations.length} reservation{room.reservations.length > 1 ? 's' : ''} today
-          </div>
-        )}
+        {/* Reservation Count — upcoming + active only */}
+        {!isOffice && (() => {
+          const now = new Date();
+          const remaining = room.reservations.filter((r) => new Date(r.end_date) > now);
+          return remaining.length > 0 ? (
+            <div className="mt-3 text-xs text-white/80">
+              {remaining.length} reservation{remaining.length > 1 ? 's' : ''} remaining
+            </div>
+          ) : null;
+        })()}
       </div>
 
       {/* Subtle gradient overlay */}

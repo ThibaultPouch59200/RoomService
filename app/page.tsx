@@ -18,6 +18,17 @@ export default function Home() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [lastUpdate, setLastUpdate] = useState<Date | null>(null);
+  const [currentTime, setCurrentTime] = useState<string>('');
+
+  useEffect(() => {
+    const tick = () => {
+      const now = new Date();
+      setCurrentTime(now.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false }));
+    };
+    tick();
+    const timer = setInterval(tick, 1000);
+    return () => clearInterval(timer);
+  }, []);
 
   const fetchRoomData = async (date?: string) => {
     try {
@@ -138,10 +149,10 @@ export default function Home() {
               title="Select date"
             >
               <p className="text-xs text-gray-500 dark:text-gray-400">Viewing</p>
-              <p className="text-sm font-semibold text-gray-900 dark:text-gray-100 leading-tight">
+              <p className="text-lg font-bold text-gray-900 dark:text-gray-100 leading-tight">
                 {new Date(selectedDate + 'T12:00:00').toLocaleDateString('en-US', {
-                  weekday: 'short',
-                  month: 'short',
+                  weekday: 'long',
+                  month: 'long',
                   day: 'numeric',
                   year: 'numeric',
                 })}
@@ -445,6 +456,12 @@ export default function Home() {
         </div>
       )}
 
+      {/* Clock — fixed bottom-right */}
+      {currentTime && (
+        <div className="fixed bottom-4 right-4 z-30 bg-white/90 dark:bg-gray-800/90 backdrop-blur-md rounded-xl shadow-lg px-4 py-2 border border-gray-200 dark:border-gray-700">
+          <p className="text-2xl font-bold tabular-nums text-gray-900 dark:text-gray-100 leading-none">{currentTime}</p>
+        </div>
+      )}
     </main>
   );
 }
